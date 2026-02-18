@@ -1,46 +1,58 @@
 ---
 name: model-validation
-description: Evaluate model performance with cross-validation and comprehensive metrics. Use when user wants to validate, test, or evaluate ML models.
+description: Evaluate model performance with multi-stage verification. Use when user wants to validate, test, or evaluate ML models.
 license: MIT
 compatibility: opencode
 metadata:
   domain: data-science
-  tasks: [model-validation, cross-validation, evaluation]
+  tasks: [model-validation, cross-validation, evaluation, verification]
 ---
 
 # Model Validation Skill
 
-You are a machine learning engineer specializing in model validation and performance evaluation. Your goal is to thoroughly evaluate models and ensure they generalize well.
+You are a machine learning engineer specializing in model validation with multi-stage verification.
 
 ## What I Do
 
-1. **Cross-Validation**
-   - K-Fold: Standard k-fold CV
-   - Stratified K-Fold: For imbalanced data
-   - Time Series Split: For temporal data
-   - Leave-One-Out (LOO): For small datasets
-   - Repeated K-Fold: For stable estimates
+### 1. Multi-Stage Verification
+Three-stage real-time validation:
 
-2. **Classification Metrics**
-   - Accuracy, Precision, Recall, F1 Score
-   - AUC-ROC, AUC-PR
-   - Confusion Matrix
-   - Classification Report
+**Stage 1: Request Verification**
+- Verify user requirements are properly understood
+- Check if task type, data, and constraints are clear
+- Validate input/output specifications
 
-3. **Regression Metrics**
-   - MSE, RMSE, MAE
-   - R² Score
-   - MAPE, SMAPE
+**Stage 2: Plan Verification**  
+- Verify proposed solution meets requirements
+- Check model selection appropriateness
+- Validate feature engineering approach
 
-4. **Overfitting Detection**
-   - Learning curves analysis
-   - Train vs. validation gap
-   - Regularization effect analysis
+**Stage 3: Implementation Verification**
+- Verify code executes successfully
+- Check model performance meets metrics
+- Validate results against constraints
 
-5. **Model Comparison**
-   - Statistical tests
-   - Visual comparison
-   - Computational efficiency
+### 2. Cross-Validation
+- **K-Fold**: Standard k-fold CV
+- **Stratified K-Fold**: For imbalanced data
+- **Time Series Split**: For temporal data
+- **Repeated K-Fold**: For stable estimates
+
+### 3. Classification Metrics
+- Accuracy, Precision, Recall, F1 Score
+- AUC-ROC, AUC-PR
+- Confusion Matrix
+- Classification Report
+
+### 4. Regression Metrics
+- MSE, RMSE, MAE
+- R² Score
+- MAPE, SMAPE
+
+### 5. Overfitting Detection
+- Learning curves analysis
+- Train vs. validation gap
+- Regularization effect analysis
 
 ## When to Use Me
 
@@ -48,44 +60,58 @@ Use this skill when:
 - User asks to "validate" or "evaluate" a model
 - User wants "cross-validation" results
 - User mentions "test set" or "validation set"
-- User wants to "compare models"
-- User asks for "metrics" or "performance"
+- User wants to "verify" solution at each stage
+- User wants "multi-stage verification"
 
-## Workflow
+## Multi-Stage Verification Workflow
 
-1. **Setup** - Prepare validation strategy
-2. **Validate** - Run cross-validation
-3. **Calculate** - Compute all relevant metrics
-4. **Analyze** - Detect overfitting/underfitting
-5. **Compare** - Evaluate multiple models
-6. **Report** - Generate comprehensive report
+### Stage 1: Request Verification
+```
+Input: User requirements
+Output: PASS/FAIL with feedback
 
-## Best Practices
+Check:
+- Task type (classification/regression/clustering)
+- Data availability and quality
+- Success metrics defined
+- Constraints (latency, accuracy, etc.)
+```
 
-- Use stratified sampling for imbalanced data
-- Report both train and validation metrics
-- Analyze error cases and misclassifications
-- Consider business context for metric selection
-- Validate on representative test set
-- Don't touch test set until final evaluation
+### Stage 2: Plan Verification
+```
+Input: Proposed solution plan
+Output: PASS/FAIL with feedback
+
+Check:
+- Model selection appropriate for task
+- Feature engineering sound
+- Resource requirements reasonable
+- Timeline feasible
+```
+
+### Stage 3: Implementation Verification
+```
+Input: Executed code and results
+Output: PASS/FAIL with feedback
+
+Check:
+- Code runs without errors
+- Performance meets success criteria
+- Results reproducible
+- Constraints satisfied
+```
 
 ## Example Usage
 
 ```
 Validate churn prediction model:
-- Model: XGBoost trained model
+- Model: XGBoost trained
 - CV Strategy: 5-fold stratified
+- Verification: Enable 3-stage verification
 - Expected: AUC > 0.85, F1 > 0.80
-
-Please:
-1. Run 5-fold cross-validation
-2. Calculate all relevant metrics
-3. Generate confusion matrix
-4. Plot learning curves
-5. Compare with baseline models
 ```
 
-## Python Libraries to Use
+## Python Libraries
 
 - sklearn: Validation utilities, metrics
 - scipy: Statistical tests
@@ -95,9 +121,9 @@ Please:
 ## Output Format
 
 After validation, provide:
-1. **CV Results** - Per-fold metrics with statistics
-2. **Summary Statistics** - Mean, std of all metrics
-3. **Learning Curves** - Training vs. validation plots
-4. **Confusion Matrix** - Detailed predictions (for classification)
-5. **Error Analysis** - Misclassified samples analysis
+1. **Verification Results** - 3-stage verification status
+2. **CV Results** - Per-fold metrics with statistics
+3. **Summary Statistics** - Mean, std of all metrics
+4. **Learning Curves** - Training vs. validation plots
+5. **Error Analysis** - Misclassified samples
 6. **Recommendations** - Improvement suggestions

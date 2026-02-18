@@ -193,3 +193,10 @@ logs/
 data/raw/
 data/processed/
 !data/.gitkeep
+
+# Test data files (keep .py files, ignore everything else)
+tests/*.csv
+tests/*.png
+tests/*.npy
+tests/*.pkl
+tests/analysis_result/

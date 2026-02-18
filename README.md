@@ -1,8 +1,105 @@
 # AutoML-Agent
-This is the official implementation of **AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML** (ICML 2025) 
+
+> **OpenCode Integration Version** - Multi-Agent LLM Framework for Full-Pipeline AutoML
+
+This is the official implementation of **AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML** (ICML 2025) with OpenCode Skills and MCP integration.
 > [[Paper](https://arxiv.org/abs/2410.02958)][[Poster](/static/pdfs/poster.pdf)][[Website](https://deepauto-ai.github.io/automl-agent/)]
 
+## OpenCode Integration
+
+This version integrates AutoML-Agent with OpenCode, providing:
+- **Standardized Skills** - 5 ML pipeline skills (data-cleaning, feature-engineering, model-training, model-validation, shap-analysis)
+- **MCP Tool Support** - Python executor, filesystem, and more
+- **75+ LLM Providers** - Flexible model switching
+- **Agent System** - Coordinated multi-agent architecture
+
+### Skills Available
+
+| Skill | Description |
+|-------|-------------|
+| `data-cleaning` | Clean and preprocess tabular data |
+| `feature-engineering` | Feature selection, construction, transformation |
+| `model-training` | Train models with RAP retrieval and hyperparameter optimization |
+| `model-validation` | Cross-validation with multi-stage verification |
+| `shap-analysis` | Model explainability using SHAP values |
+
+### Supported ML Tasks
+
+- **Image Classification** - CNN-based models
+- **Text Classification** - NLP models
+- **Tabular Classification/Regression** - XGBoost, LightGBM, CatBoost
+- **Node Classification** - Graph neural networks
+- **Time-Series Forecasting** - Prediction models
+
+## Quick Start
+
+```python
+from agent_manager import AgentManager
+
+data_path = "data/banana_quality.csv"
+user_prompt = "Build a model to classify banana quality as good or bad..."
+manager = AgentManager(llm='gpt-4', interactive=False, data_path=data_path)
+manager.initiate_chat(user_prompt)
+```
+
+### Using OpenCode Skills
+
+```bash
+# Use skills via OpenCode CLI
+@data-cleaning Clean the dataset
+@feature-engineering Engineer features for model
+@model-training Train a classifier
+@model-validation Validate the model
+@shap-analysis Explain model predictions
+```
+
+## Architecture
+
+```
+AutoML-Agent (OpenCode Version)
+├── Coordinator (Primary Agent)
+├── Subagents
+│   ├── Data Processor
+│   ├── Feature Engineer
+│   ├── Model Selector
+│   ├── Model Validator
+│   └── Explainability
+├── Skills (5 standardized skills)
+└── MCP Tools (Python executor, filesystem)
+```
+
 ## Setup
+
+```bash
+conda create --name amla python=3.11
+pip install -r requirements.txt
+```
+
+### LLM Configuration
+
+Edit `core/configs.py` to configure LLM providers:
+```python
+AVAILABLE_LLMs = {
+    "prompt-llm": {...},
+    "gpt-4": {"api_key": "...", "model": "gpt-4o"},
+    "qwen": {...},
+}
+```
+
+## Citation
+
+```bibtex
+@article{AutoML_Agent,
+  title={Auto{ML}-Agent: A Multi-Agent {LLM} Framework for Full-Pipeline Auto{ML}},
+  author={Trirat, Patara and Jeong, Wonyong and Hwang, Sung Ju},
+  booktitle={ICML},
+  year={2025}
+}
+```
+
+## License
+
+CC BY-NC 4.0 - Commercial use prohibited.
 ### Benchmark Datasets
 | **Data Modality**                  | **Downstream Task**        | **Dataset Name**                                                                                                                                    | **# Features** | **# Train** | **# Valid** | **# Test** | **# Classes** | **Source**                   | **License** | **Evaluation Metric** |
 | ---------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ----------- | ----------- | ---------- | ------------- | ---------------------------: | ----------: | --------------------: |
