@@ -1,0 +1,96 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "automl-coordinator": {
+      "mode": "primary",
+      "description": "AutoML project coordinator that orchestrates data processing, feature engineering, model selection, and validation",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "skill": true,
+        "task": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "glob": true,
+        "grep": true,
+        "read": true
+      }
+    },
+    "data-processor": {
+      "mode": "subagent",
+      "description": "Data cleaning and preprocessing specialist - handles missing values, outliers, data type conversion",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    },
+    "feature-engineer": {
+      "mode": "subagent",
+      "description": "Feature engineering and selection specialist - creates, transforms, and selects features for ML",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    },
+    "model-selector": {
+      "mode": "subagent",
+      "description": "Model selection and hyperparameter optimization specialist - finds optimal ML model and params",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    },
+    "model-validator": {
+      "mode": "subagent",
+      "description": "Model validation and performance evaluation specialist - cross-validation, metrics, model comparison",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.2,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    },
+    "explainability": {
+      "mode": "subagent",
+      "description": "Model interpretability and SHAP analysis specialist - explains model predictions with SHAP values",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "temperature": 0.3,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    }
+  },
+  "mcp": {
+    "python-executor": {
+      "type": "local",
+      "command": ["python", "-m", "mcp_server_python_executor"],
+      "enabled": true,
+      "timeout": 30000
+    }
+  },
+  "permission": {
+    "skill": "allow",
+    "task": "allow",
+    "bash": "ask",
+    "write": "ask",
+    "edit": "ask"
+  }
+}

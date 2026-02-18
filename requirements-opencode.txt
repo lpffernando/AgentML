@@ -1,0 +1,18 @@
+# AutoML-Agent OpenCode Integration
+
+Additional dependencies for OpenCode integration.
+
+Install with:
+    pip install -r requirements-opencode.txt
+
+## Core Dependencies
+mcp>=1.0.0
+
+## Optional: For enhanced MCP functionality
+# uv loop for async operations
+# asyncio  
+
+## Development Dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.0.0

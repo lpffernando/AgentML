@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  automl-agent:
+    build: .
+    container_name: automl-agent-opencode
+    volumes:
+      - ./data:/app/data
+      - ./workspace:/workspace
+      - ./agent_workspace:/app/agent_workspace
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - WORKSPACE=/workspace
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+  # Optional: MLflow tracking server
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: automl-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    environment:
+      - MLFLOW_BACKEND_STORE=sqlite:///mlflow/mlflow.db
+    profiles:
+      - mlflow
+
+  # Optional: Jupyter for development
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: automl-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/home/jovyan/data
+      - ./workspace:/home/jovyan/workspace
+    environment:
+      - JUPYTER_TOKEN=automl
+    profiles:
+      - dev
+
+volumes:
+  mlflow_data:

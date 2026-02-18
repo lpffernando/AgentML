@@ -172,3 +172,24 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# ===========================================
+# AutoML-Agent specific
+# ===========================================
+
+# Workspace for ML artifacts
+workspace/
+agent_workspace/
+*.pkl
+*.joblib
+*.mlflow
+
+# Model artifacts
+models/
+logs/
+*.onnx
+
+# Data files
+data/raw/
+data/processed/
+!data/.gitkeep
