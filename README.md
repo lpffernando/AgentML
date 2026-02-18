@@ -1,180 +1,178 @@
 # AutoML-Agent
 
-> **OpenCode Integration Version** - Multi-Agent LLM Framework for Full-Pipeline AutoML
+> 基于 OpenCode 的自动化机器学习智能体框架
 
-This is the official implementation of **AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML** (ICML 2025) with OpenCode Skills and MCP integration.
-> [[Paper](https://arxiv.org/abs/2410.02958)][[Poster](/static/pdfs/poster.pdf)][[Website](https://deepauto-ai.github.io/automl-agent/)]
+AutoML-Agent 是一个基于 OpenCode Skills 和 MCP 工具的自动化机器学习框架，通过标准化的技能（Skills）系统实现端到端的 ML 流水线自动化。
 
-## OpenCode Integration
+## 核心特性
 
-This version integrates AutoML-Agent with OpenCode, providing:
-- **Standardized Skills** - 5 ML pipeline skills (data-cleaning, feature-engineering, model-training, model-validation, shap-analysis)
-- **MCP Tool Support** - Python executor, filesystem, and more
-- **75+ LLM Providers** - Flexible model switching
-- **Agent System** - Coordinated multi-agent architecture
+### 1. 标准化 Skills 架构
 
-### Skills Available
+| Skill | 功能 |
+|-------|------|
+| `@data-cleaning` | 数据清洗与预处理 |
+| `@feature-engineering` | 特征工程与代码生成 |
+| `@model-training` | 模型训练与 RAP 检索 |
+| `@model-validation` | 多阶段验证 |
+| `@shap-analysis` | 模型可解释性分析 |
 
-| Skill | Description |
-|-------|-------------|
-| `data-cleaning` | Clean and preprocess tabular data |
-| `feature-engineering` | Feature selection, construction, transformation |
-| `model-training` | Train models with RAP retrieval and hyperparameter optimization |
-| `model-validation` | Cross-validation with multi-stage verification |
-| `shap-analysis` | Model explainability using SHAP values |
+### 2. 三大核心能力
 
-### Supported ML Tasks
+**RAP 检索增强规划 (Retrieval-Augmented Planning)**
+- 从 HuggingFace、Kaggle、学术论文检索最优模型
+- 无需训练即可快速筛选候选模型
+- 结合 LLM 上下文学习进行模型排序
 
-- **Image Classification** - CNN-based models
-- **Text Classification** - NLP models
-- **Tabular Classification/Regression** - XGBoost, LightGBM, CatBoost
-- **Node Classification** - Graph neural networks
-- **Time-Series Forecasting** - Prediction models
+**多阶段验证 (Multi-Stage Verification)**
+- Stage 1: 需求验证 - 确认任务类型、数据、指标
+- Stage 2: 方案验证 - 验证模型选择、特征工程合理性
+- Stage 3: 执行验证 - 验证代码执行、性能达标
 
-## Quick Start
+**代码自修正 (Self-Correction)**
+- 自动执行 Python 代码并捕获错误
+- 分析错误信息并自动修复
+- 最多 5 次重试直到成功
+
+### 3. MCP 工具集成
+
+- **Python 执行器** - 安全运行生成的代码
+- **文件系统** - 读写数据、模型文件
+- **MLflow** - 实验跟踪与模型管理
+
+## 支持的 ML 任务
+
+- 表格分类/回归 (XGBoost, LightGBM, CatBoost)
+- 图像分类
+- 文本分类
+- 节点分类 (图神经网络)
+- 时序预测
+
+## 在 OpenCode 中使用
+
+### 方式一：使用 @ 引用 Skills
+
+```bash
+# 数据清洗
+@data-cleaning 清洗数据，处理缺失值和异常值
+
+# 特征工程
+@feature-engineering 为客户流失数据创建特征
+
+# 模型训练
+@model-training 训练 XGBoost 分类器
+
+# 模型验证
+@model-validation 验证模型性能
+
+# SHAP 分析
+@shap-analysis 解释模型预测
+```
+
+### 方式二：组合多技能 Pipeline
+
+```
+@data-cleaning 清洗数据 →
+@feature-engineering 创建特征 →
+@model-training 训练模型 →
+@model-validation 验证性能 →
+@shap-analysis 解释结果
+```
+
+### 方式三：Python API 调用
+
+```python
+from skill import data_cleaning, model_training
+
+# 清洗数据
+cleaned_data = data_cleaning(
+    data="data/raw/sales.csv",
+    handle_missing="mean",
+    detect_outliers=True
+)
+
+# 训练模型
+result = model_training(
+    data=cleaned_data,
+    task="classification",
+    models=["xgboost", "lightgbm"],
+    optimize="auc"
+)
+```
+
+### 方式四：Agent 协调模式
 
 ```python
 from agent_manager import AgentManager
 
-data_path = "data/banana_quality.csv"
-user_prompt = "Build a model to classify banana quality as good or bad..."
-manager = AgentManager(llm='gpt-4', interactive=False, data_path=data_path)
-manager.initiate_chat(user_prompt)
+manager = AgentManager(llm="gpt-4", data_path="data.csv")
+manager.initiate_chat("构建一个客户流失预测模型")
 ```
 
-### Using OpenCode Skills
+## 项目结构
+
+```
+automl-agent/
+├── .opencode/
+│   ├── skills/           # 5 个标准化 Skills
+│   │   ├── data-cleaning/
+│   │   ├── feature-engineering/
+│   │   ├── model-training/
+│   │   ├── model-validation/
+│   │   └── shap-analysis/
+│   └── agents/           # Agent 定义
+│       ├── automl-coordinator/
+│       ├── data-processor/
+│       ├── feature-engineer/
+│       ├── model-selector/
+│       ├── model-validator/
+│       └── explainability/
+├── mcp_servers/          # MCP 工具服务器
+└── core/                 # 核心逻辑
+```
+
+## 安装
 
 ```bash
-# Use skills via OpenCode CLI
-@data-cleaning Clean the dataset
-@feature-engineering Engineer features for model
-@model-training Train a classifier
-@model-validation Validate the model
-@shap-analysis Explain model predictions
-```
+# 克隆项目
+git clone https://github.com/your-repo/automl-agent.git
+cd automl-agent
 
-## Architecture
+# 创建虚拟环境
+conda create -n automl python=3.10
+conda activate automl
 
-```
-AutoML-Agent (OpenCode Version)
-├── Coordinator (Primary Agent)
-├── Subagents
-│   ├── Data Processor
-│   ├── Feature Engineer
-│   ├── Model Selector
-│   ├── Model Validator
-│   └── Explainability
-├── Skills (5 standardized skills)
-└── MCP Tools (Python executor, filesystem)
-```
-
-## Setup
-
-```bash
-conda create --name amla python=3.11
+# 安装依赖
 pip install -r requirements.txt
 ```
 
-### LLM Configuration
+## 配置 LLM
 
-Edit `core/configs.py` to configure LLM providers:
-```python
-AVAILABLE_LLMs = {
-    "prompt-llm": {...},
-    "gpt-4": {"api_key": "...", "model": "gpt-4o"},
-    "qwen": {...},
-}
+在 `.env` 中配置你喜欢的 LLM 提供商：
+
+```bash
+# OpenAI
+OPENAI_API_KEY=sk-...
+
+# 或使用其他 75+ 提供商
+# 支持: Anthropic, Google, Meta, Mistral, Cohere, etc.
 ```
 
-## Citation
+## 输出示例
 
-```bibtex
-@article{AutoML_Agent,
-  title={Auto{ML}-Agent: A Multi-Agent {LLM} Framework for Full-Pipeline Auto{ML}},
-  author={Trirat, Patara and Jeong, Wonyong and Hwang, Sung Ju},
-  booktitle={ICML},
-  year={2025}
-}
+使用 `@model-validation` 后的输出：
+
+```
+✓ Stage 1: 需求验证 PASS
+✓ Stage 2: 方案验证 PASS  
+✓ Stage 3: 执行验证 PASS
+
+性能指标:
+- AUC-ROC: 0.89
+- F1-Score: 0.85
+- Precision: 0.87
+- Recall: 0.83
 ```
 
 ## License
 
-CC BY-NC 4.0 - Commercial use prohibited.
-### Benchmark Datasets
-| **Data Modality**                  | **Downstream Task**        | **Dataset Name**                                                                                                                                    | **# Features** | **# Train** | **# Valid** | **# Test** | **# Classes** | **Source**                   | **License** | **Evaluation Metric** |
-| ---------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | ----------- | ----------- | ---------- | ------------- | ---------------------------: | ----------: | --------------------: |
-| _Main Datasets_                    |                            |                                                                                                                                                     |                |             |             |            |               |                              |             |                       |
-| Image (Computer Vision)            | Image Classification       | [Butterfly Image](https://www.kaggle.com/datasets/phucthaiv02/butterfly-image-classification)                                                       | 224x224        | 4,549       | 1,299       | 651        | 75            | Kaggle Dataset               | CC0         | Accuracy              |
-|                                    |                            | [Shopee-IET](https://www.kaggle.com/competitions/demo-shopee-iet-competition/data)                                                                  | Varying        | 640         | 160         | 80         | 4             | Kaggle Competition           | Custom      |                       |
-| Text (Natural Language Processing) | Text Classification        | [Ecommerce Text](https://www.kaggle.com/datasets/saurabhshahane/ecommerce-text-classification)                                                      | N/A            | 35,296      | 10,084      | 5,044      | 4             | Kaggle Dataset               | CC BY 4.0   | Accuracy              |
-|                                    |                            | [Textual Entailment](https://github.com/guosyjlu/DS-Agent)                                                                                          | N/A            | 3,925       | 982         | 4,908      | 3             | Kaggle Dataset               | N/A         |                       |
-| Tabular (Classic Machine Learning) | Tabular Classification     | [Banana Quality](https://www.kaggle.com/datasets/l3llff/banana/data)                                                                                | 7              | 5,600       | 1,600       | 800        | 2             | Kaggle Dataset               | Apache 2.0  | F1                    |
-|                                    |                            | [Software Defects](https://github.com/guosyjlu/DS-Agent)                                                                                            | 21             | 73,268      | 18,318      | 91,587     | 2             | Kaggle Competition           | N/A         |                       |
-|                                    | Tabular Clustering         | [Smoker Status](https://github.com/guosyjlu/DS-Agent)                                                                                               | 22             | 100,331     | 28,666      | 14,334     | 2             | Kaggle Competition           | N/A         | RI                    |
-|                                    |                            | [Higher Education Students Performance](https://archive.ics.uci.edu/dataset/856/higher+education+students+performance+evaluation)                   | 31             | 101         | 29          | 15         | 8             | Research Dataset (UCI ML)    | CC BY 4.0   | RI                    |
-|                                    | Tabular Regression         | [Crab Age](https://github.com/guosyjlu/DS-Agent)                                                                                                    | 8              | 53,316      | 13,329      | 66,646     | N/A           | Kaggle Competition           | CC0         | RMSLE                 |
-|                                    |                            | [Crop Price](https://www.kaggle.com/datasets/varshitanalluri/crop-price-prediction-dataset)                                                         | 8              | 1,540       | 440         | 220        | N/A           | Kaggle Dataset               | MIT         | RMSLE                 |
-| Graph (Graph Learning)             | Node Classification        | [Cora](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.Planetoid.html#torch_geometric.datasets.Planetoid)     | 1,433          | 2,708       | 2,708       | 2,708      | 7             | Research Dataset (Planetoid) | CC BY 4.0   | Accuracy              |
-|                                    |                            | [Citeseer](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.Planetoid.html#torch_geometric.datasets.Planetoid) | 3,703          | 3,327       | 3,327       | 3,327      | 6             | Research Dataset (Planetoid) | N/A         |                       |
-| Time Series (Time Series Analysis) | Time-Series Forecasting    | [Weather](https://github.com/thuml/Time-Series-Library)                                                                                             | 21             | 36,887      | 10,539      | 5,270      | N/A           | Research Dataset (TSLib)     | CC BY 4.0   | RMSLE                 |
-|                                    |                            | [Electricity](https://github.com/thuml/Time-Series-Library)                                                                                         | 321            | 18,412      | 5,260       | 2,632      | N/A           | Research Dataset (TSLib)     | CC BY 4.0   |                       |
-| _Additional Datasets for SELA_     |                            |                                                                                                                                                     |                |             |             |            |               |                              |             |                       |
-| Tabular (Classic Machine Learning) | Binary Classification      | [Smoker Status](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                                       | 22             | 85997       | 21500       | 143331     | 2             | Kaggle Competition           | N/A         | F1                    |
-|                                    |                            | [Click Prediction Small](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                              | 11             | 19174       | 4794        | 7990       | 2             | OpenML                       |             |                       |
-|                                    | Multi-Class Classification | [MFeat Factors](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                                       | 216            | 960         | 240         | 400        | 10            | OpenML                       |             |                       |
-|                                    |                            | [Wine Quality White](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                                  | 11             | 2350        | 588         | 980        | 7             | OpenML                       |             |                       |
-|                                    | Regression                 | [Colleges](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                                            | 44             | 3389        | 848         | 1413       | N/A           | OpenML                       |             | RMSE                  |
-|                                    |                            | [House Prices](https://github.com/geekan/MetaGPT/tree/main/metagpt/ext/sela)                                                                        | 80             | 700         | 176         | 292        | N/A           | Kaggle Competition           |             |                       |
-
-## Usage
-We recommend using conda environment.
-```bash
-conda create --name amla python=3.11
-pip install -r requirements.txt
-```
-
-### Run AutoML Development
-1. Run the instruction-tuned LoRA adapter ([Download Link](https://www.dropbox.com/scl/fi/9mjm772d99xcr5e0905cx/adapter-mixtral.zip?rlkey=amoq17jhp3ye3sswpqgmzsgoo&st=woamltp6&dl=0)) for Prompt Agent via vLLM. `vllm==0.4.1` is strictly required to get correct parsed results.
-> **Update:** We have implemented an alternative OpenAI version via `parse_openai(..)`
-```bash
-HF_TOKEN="Your HuggingFace Token" CUDA_VISIBLE_DEVICES="0,1,2,3" python -m vllm.entrypoints.openai.api_server --model mistralai/Mixtral-8x7B-Instruct-v0.1 --enable-lora --lora-modules prompt-llama=./adapter/adapter-mixtral/ --tensor-parallel-size 4
-```
-2. Setup Prompt Agent and LLM backbone(s) in `./configs.py`.
-```python
-AVAILABLE_LLMs = {
-    "prompt-llm": {
-        "api_key": "empty",
-        "model": "prompt-llama",
-        "base_url": "http://localhost:8000/v1",
-    },
-    "gpt-4": {"api_key": "YOUR OPENAI KEY", "model": "gpt-4o"},
-    "gpt-3.5": {"api_key": "YOUR OPENAI KEY", "model": "gpt-3.5-turbo"},
-}
-```
-
-3. Run chat with AutoML-Agent's Manager 🕴🏻!
-```python
-from agent_manager import AgentManager
-
-data_path = "agent_workspace/datasets/banana_quality.csv" # assuming the data is uploaded via web interface / API
-user_prompt = "Build a model to classify banana quality as good or bad based on their numerical information about bananas of different quality (size, weight, sweetness, softness, harvest time, ripeness, and acidity). We have uploaded the entire dataset for you here in the banana_quality.csv file."
-manager = AgentManager(llm='gpt-4', interactive=False, data_path=data_path)
-
-manager.initiate_chat(user_prompt)
-```
-Running in a Jupyter notebook is recommended. The generated output .py file will be in the `agent_workspace`.
-
-## Citation
-```bibtex
-@inproceedings{AutoML_Agent,
-  title={Auto{ML}-Agent: A Multi-Agent {LLM} Framework for Full-Pipeline Auto{ML}},
-  author={Trirat, Patara and Jeong, Wonyong and Hwang, Sung Ju},
-  booktitle={Forty-second International Conference on Machine Learning},
-  year={2025},
-  url={https://openreview.net/forum?id=p1UBWkOvZm}
-}
-```
-
-## License
-This project is licensed under the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
-Commercial use is prohibited.
+MIT License
