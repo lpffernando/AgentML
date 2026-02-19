@@ -185,6 +185,54 @@ agentML/
 
 ---
 
+## 安装
+
+### 前置要求
+
+- Python 3.10+
+- OpenCode CLI (`npm install -g opencode-ai`)
+
+### 步骤
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/lpffernando/agentML.git
+cd agentML
+
+# 2. 创建虚拟环境
+conda create -n agentml python=3.11
+conda activate agentml
+
+# 3. 安装依赖
+pip install -r requirements.txt
+
+# 4. 安装 OpenCode 依赖
+pip install -r requirements-opencode.txt
+
+# 5. 配置环境变量
+cp .env.example .env
+# 编辑 .env 添加你的 API Key
+
+# 6. 启动 OpenCode
+opencode
+```
+
+### 环境变量配置
+
+在 `.env` 中配置 LLM 提供商：
+
+```bash
+# OpenAI
+OPENAI_API_KEY=sk-...
+
+# 或 Anthropic
+ANTHROPIC_API_KEY=sk-ant-...
+
+# 或使用其他 75+ 提供商
+```
+
+---
+
 ## 快速开始
 
 ### 1. 启动 OpenCode
