@@ -29,7 +29,6 @@ jobs:
         pytest tests/ -v --cov=adapter --cov-report=xml
         
     - name: Upload coverage
-      if: matrix.python-version == '3.11'
       uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
@@ -49,27 +48,63 @@ jobs:
       run: pip install ruff black mypy
       
     - name: Run ruff
-      run: ruff check adapter/ tests/
+      run: ruff check adapter/ core/ tests/
       
     - name: Run black
-      run: black --check adapter/ tests/
+      run: black --check adapter/ core/ tests/
       
     - name: Run mypy
-      run: mypy adapter/ || true
+      run: mypy adapter/ core/ || true
+
+  opencode-validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Validate OpenCode JSON
+      run: |
+        # Check if opencode.json is valid JSON
+        python -c "import json; json.load(open('.opencode/opencode.json'))"
+        echo "✓ opencode.json is valid JSON"
+        
+    - name: Validate Agent definitions
+      run: |
+        # Check required agent files exist
+        for agent in automl-coordinator data-processor feature-engineer model-selector model-validator explainability; do
+          if [ -f ".opencode/agents/${agent}.md" ]; then
+            echo "✓ Agent ${agent}.md exists"
+          else
+            echo "✗ Agent ${agent}.md missing"
+            exit 1
+          fi
+        done
+        
+    - name: Validate Skill definitions
+      run: |
+        # Check required skill directories exist
+        for skill in data-cleaning feature-engineering model-training model-validation shap-analysis; do
+          if [ -f ".opencode/skills/${skill}/SKILL.md" ]; then
+            echo "✓ Skill ${skill}/SKILL.md exists"
+          else
+            echo "✗ Skill ${skill}/SKILL.md missing"
+            exit 1
+          fi
+        done
 
   build-docker:
     runs-on: ubuntu-latest
-    needs: [test, lint]
+    needs: [test, lint, opencode-validate]
     
     steps:
     - uses: actions/checkout@v4
     
     - name: Build Docker image
-      run: docker build -t automl-agent-opencode:${{ github.sha }} .
+      run: docker build -t agentml:${{ github.sha }} .
       
     - name: Test Docker image
       run: |
-        docker run -d --name test-container automl-agent-opencode:${{ github.sha }}
+        docker run -d --name test-container agentml:${{ github.sha }}
         sleep 5
         docker logs test-container
         docker stop test-container
