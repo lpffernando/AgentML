@@ -1,4 +1,4 @@
-# AutoML-Agent OpenCode Integration
+# agentML OpenCode Integration
 
 Additional dependencies for OpenCode integration.
 

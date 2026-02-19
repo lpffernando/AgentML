@@ -174,7 +174,7 @@ cython_debug/
 .pypirc
 
 # ===========================================
-# AutoML-Agent specific
+# agentML specific
 # ===========================================
 
 # Workspace for ML artifacts

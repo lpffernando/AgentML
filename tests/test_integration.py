@@ -1,5 +1,5 @@
 """
-Integration tests for AutoML-Agent OpenCode pipeline
+Integration tests for agentML pipeline
 """
 
 import pytest
@@ -37,9 +37,7 @@ class TestEndToEndPipeline:
         """Test complete pipeline from request to result"""
         from adapter.agent_wrapper import OpenCodeAgentAdapter
 
-        adapter = OpenCodeAgentAdapter(
-            agent_type="coordinator", workspace=temp_workspace
-        )
+        adapter = OpenCodeAgentAdapter(agent_type="coordinator", workspace=temp_workspace)
 
         result = adapter.execute_full_pipeline(
             user_request="Build a classification model", data_path=sample_data_path
@@ -52,9 +50,7 @@ class TestEndToEndPipeline:
         """Test pipeline with churn prediction request"""
         from adapter.agent_wrapper import OpenCodeAgentAdapter
 
-        adapter = OpenCodeAgentAdapter(
-            agent_type="coordinator", workspace=temp_workspace
-        )
+        adapter = OpenCodeAgentAdapter(agent_type="coordinator", workspace=temp_workspace)
 
         result = adapter.execute_full_pipeline(
             user_request="Predict customer churn", data_path=sample_data_path
@@ -160,18 +156,11 @@ class TestMCPIntegration:
             config = json.load(f)
 
         assert "mcp" in config, "MCP should be configured"
-        assert "python-executor" in config["mcp"], (
-            "python-executor should be configured"
-        )
+        assert "python-executor" in config["mcp"], "python-executor should be configured"
 
     def test_mcp_server_file_exists(self):
         """Test MCP server implementation exists"""
-        server_path = (
-            Path(__file__).parent.parent
-            / "mcp_servers"
-            / "python_executor"
-            / "server.py"
-        )
+        server_path = Path(__file__).parent.parent / "mcp_servers" / "python_executor" / "server.py"
 
         assert server_path.exists(), "MCP server file should exist"
 
@@ -212,9 +201,7 @@ class TestAdapterCoreIntegration:
         """Test adapter handles missing core gracefully"""
         from adapter.agent_wrapper import OpenCodeAgentAdapter
 
-        adapter = OpenCodeAgentAdapter(
-            agent_type="coordinator", workspace=tempfile.mkdtemp()
-        )
+        adapter = OpenCodeAgentAdapter(agent_type="coordinator", workspace=tempfile.mkdtemp())
 
         # Should initialize even without core
         assert adapter.agent_type == "coordinator"

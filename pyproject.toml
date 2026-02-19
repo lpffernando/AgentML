@@ -3,13 +3,13 @@ requires = ["setuptools>=65.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "automl-agent-opencode"
+name = "agentml"
 version = "0.1.0"
-description = "AutoML-Agent OpenCode integration - multi-agent ML pipeline automation with Skills and MCP"
+description = "agentML - Multi-Agent AutoML framework with OpenCode Skills and MCP"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "AutoML Team", email = "team@example.com"}
+    {name = "agentML Team", email = "team@example.com"}
 ]
 keywords = ["automl", "machine-learning", "opencode", "agent", "ml-pipeline", "skills"]
 classifiers = [
@@ -51,18 +51,18 @@ core = [
     # This will use the core/ directory if present
 ]
 all = [
-    "automl-agent-opencode[dev]",
-    "automl-agent-opencode[opencode]",
+    "agentml[dev]",
+    "agentml[opencode]",
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-org/automl-agent-opencode"
-Documentation = "https://automl-agent-opencode.readthedocs.io"
-Repository = "https://github.com/your-org/automl-agent-opencode"
-Issues = "https://github.com/your-org/automl-agent-opencode/issues"
+Homepage = "https://github.com/lpffernando/agentML"
+Documentation = "https://agentml.readthedocs.io"
+Repository = "https://github.com/lpffernando/agentML"
+Issues = "https://github.com/lpffernando/agentML/issues"
 
 [project.scripts]
-automl-opencode = "adapter.cli:main"
+agentml = "adapter.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

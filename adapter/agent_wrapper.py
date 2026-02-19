@@ -1,8 +1,9 @@
 """
-AutoML-Agent OpenCode Adapter
+agentML Adapter
 
 This adapter layer provides OPTIONAL integration between OpenCode and
-the legacy AutoML-Agent core. It is NOT required for OpenCode to function.
+the legacy core/ components (from original AutoML-Agent project).
+It is NOT required for OpenCode to function.
 
 This adapter is useful if you want to:
 - Reuse existing core/ components

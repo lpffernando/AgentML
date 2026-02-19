@@ -1,8 +1,8 @@
-# AutoML-Agent Project
+# agentML Project
 
 ## Project Overview
 
-This is an AutoML (Automated Machine Learning) project that provides end-to-end machine learning pipeline automation. The system uses a multi-agent architecture to coordinate data processing, feature engineering, model selection, and validation.
+This is an agentML (Automated Machine Learning) project built on OpenCode platform. The system uses a multi-agent architecture to coordinate data processing, feature engineering, model selection, and validation.
 
 ## Supported ML Tasks
 

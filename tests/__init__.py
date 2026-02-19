@@ -1,5 +1,5 @@
 """
-Test suite for AutoML-Agent OpenCode integration
+Test suite for agentML
 """
 
 # Test packages

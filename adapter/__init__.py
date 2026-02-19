@@ -1,8 +1,8 @@
 """
-AutoML-Agent OpenCode Adapter Package
+agentML Adapter Package
 
-This package provides integration between AutoML-Agent core components
-and the OpenCode framework.
+This package provides integration between agentML (OpenCode-based AutoML)
+and the optional legacy core components.
 
 Usage:
     from adapter import OpenCodeAgentAdapter, create_adapter

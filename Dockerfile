@@ -1,4 +1,4 @@
-# AutoML-Agent OpenCode Docker Image
+# agentML Docker Image
 
 FROM python:3.11-slim
 
@@ -39,4 +39,4 @@ ENV PYTHONPATH=/app:$PYTHONPATH
 EXPOSE 8000
 
 # Default command
-CMD ["python", "-c", "print('AutoML-Agent OpenCode ready. Run tests with: pytest')"]
+CMD ["python", "-c", "print('agentML ready. Run tests with: pytest')"]
