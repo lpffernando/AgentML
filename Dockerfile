@@ -19,11 +19,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements files
-COPY requirements.txt requirements-opencode.txt ./
+COPY requirements-opencode.txt ./
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir -r requirements-opencode.txt
+RUN pip install --no-cache-dir -r requirements-opencode.txt
 
 # Copy application code
 COPY . .

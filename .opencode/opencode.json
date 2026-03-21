@@ -4,8 +4,6 @@
     "automl-coordinator": {
       "mode": "primary",
       "description": "AutoML project coordinator that orchestrates data processing, feature engineering, model selection, and validation",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.3,
       "tools": {
         "skill": true,
         "task": true,
@@ -20,8 +18,6 @@
     "data-processor": {
       "mode": "subagent",
       "description": "Data cleaning and preprocessing specialist - handles missing values, outliers, data type conversion",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.2,
       "tools": {
         "skill": true,
         "bash": true,
@@ -32,8 +28,6 @@
     "feature-engineer": {
       "mode": "subagent",
       "description": "Feature engineering and selection specialist - creates, transforms, and selects features for ML",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.3,
       "tools": {
         "skill": true,
         "bash": true,
@@ -44,8 +38,6 @@
     "model-selector": {
       "mode": "subagent",
       "description": "Model selection and hyperparameter optimization specialist - finds optimal ML model and params",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.3,
       "tools": {
         "skill": true,
         "bash": true,
@@ -56,8 +48,6 @@
     "model-validator": {
       "mode": "subagent",
       "description": "Model validation and performance evaluation specialist - cross-validation, metrics, model comparison",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.2,
       "tools": {
         "skill": true,
         "bash": true,
@@ -68,8 +58,16 @@
     "explainability": {
       "mode": "subagent",
       "description": "Model interpretability and SHAP analysis specialist - explains model predictions with SHAP values",
-      "model": "anthropic/claude-sonnet-4-20250514",
-      "temperature": 0.3,
+      "tools": {
+        "skill": true,
+        "bash": true,
+        "write": true,
+        "read": true
+      }
+    },
+    "viz-agent": {
+      "mode": "subagent",
+      "description": "Visualization specialist - creates charts, maps, and ML plots. Uses data-visualization and geospatial-analysis skills",
       "tools": {
         "skill": true,
         "bash": true,
@@ -84,6 +82,15 @@
       "command": ["python", "-m", "mcp_server_python_executor"],
       "enabled": true,
       "timeout": 30000
+    },
+    "atlas-gis-tools": {
+      "type": "local",
+      "command": ["npx", "-y", "atlas-tools-mcp-server@latest"],
+      "environment": {
+        "PLATFORM": "MODELSCOPE",
+        "TOKEN": "${ATLAS_TOKEN}"
+      },
+      "enabled": true
     }
   },
   "permission": {

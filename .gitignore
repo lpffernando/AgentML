@@ -200,3 +200,4 @@ tests/*.png
 tests/*.npy
 tests/*.pkl
 tests/analysis_result/
+tests/

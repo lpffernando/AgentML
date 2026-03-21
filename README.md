@@ -28,19 +28,35 @@ agentML 由三层架构组成：
 
 ## Agent 体系
 
-agentML 定义了 **6 个专业化智能体**，分工协作：
+agentML 定义了 **7 个专业化智能体**，分工协作：
 
 | Agent | 类型 | 职责 |
 |-------|------|------|
 | `@automl-coordinator` | **Primary** | 统筹协调整个 ML 项目，调度子 Agent |
-| `@data-processor` | Subagent | 数据加载、清洗、缺失值处理、异常值检测 |
-| `@feature-engineer` | Subagent | 特征选择、构造、转换、降维 |
+| `@data-processor` / `@eda` | Subagent | EDA数据分析、数据加载、清洗、缺失值处理 |
+| `@feature-engineering` | Subagent | 特征选择、构造、转换、降维 |
 | `@model-selector` | Subagent | 模型选型、超参数优化、训练 |
-| `@model-validator` | Subagent | 交叉验证、性能评估、模型比较 |
+| `@model-validator` | Subagent | 交叉验证，性能评估、模型比较 |
 | `@explainability` | Subagent | SHAP 分析、模型可解释性 |
+| `@viz-agent` | Subagent | 可视化、图表生成、地图绑定 |
 
 ### Agent 协作流程
 
+```
+用户请求
+    ↓
+@automl-coordinator (主智能体)
+    ↓
+┌─────────────────────────────────────────┐
+│  @data-processor   →   EDA/数据清洗     │
+│  @feature-engineering →   特征工程      │
+│  @model-selector   →   模型训练         │
+│  @model-validator  →   模型验证         │
+│  @explainability   →   模型解释         │
+│  @viz-agent        →   可视化           │
+└─────────────────────────────────────────┘
+    ↓
+返回结果 + 报告
 ```
 用户请求
     ↓
@@ -65,11 +81,16 @@ agentML 定义了 **6 个专业化智能体**，分工协作：
 
 | Skill | 功能 |
 |-------|------|
-| `@data-cleaning` | 数据清洗与预处理 |
-| `@feature-engineering` | 特征工程与代码生成 |
-| `@model-training` | 模型训练与超参数优化 |
-| `@model-validation` | 交叉验证与性能评估 |
-| `@shap-analysis` | SHAP 可解释性分析 |
+| `eda` | 探索性数据分析、数据概览、统计描述、相关性分析 |
+| `data-cleaning` | 数据清洗与预处理、缺失值、异常值处理 |
+| `data-visualization` | 统计图表、相关性热力图、ML可视化 |
+| `geospatial-analysis` | 地图可视化、距离计算、聚类分析 |
+| `feature-engineering` | 特征工程与代码生成 |
+| `model-training` | 模型训练与超参数优化 |
+| `model-validation` | 交叉验证与性能评估 |
+| `shap-analysis` | SHAP 可解释性分析 |
+
+> **使用方式**: 通过 `skill(name="xxx")` 调用，如 `skill(name="eda")`
 
 ### Skill 特点
 
@@ -86,6 +107,7 @@ agentML 定义了 **6 个专业化智能体**，分工协作：
 | MCP Tool | 功能 |
 |----------|------|
 | `python-executor` | 安全执行生成的 Python 代码 |
+| `atlas-gis-tools` | 地图/GIS 分析工具（需配置 ATLAS_TOKEN） |
 
 ### MCP 扩展
 
@@ -94,6 +116,31 @@ agentML 定义了 **6 个专业化智能体**，分工协作：
 - 数据库连接
 - MLflow 实验跟踪
 - 模型部署
+
+---
+
+---
+
+## 快速开始
+
+### 1. 安装 OpenCode
+
+```bash
+npm i -g opencode-ai
+```
+
+### 2. 导入项目配置
+
+```bash
+# 方式一：拷贝 .opencode 到全局配置目录
+# 方式二：直接在项目目录下运行 opencode
+```
+
+### 3. 开始使用
+
+```bash
+opencode
+```
 
 ---
 
@@ -156,8 +203,8 @@ agentML 定义了 **6 个专业化智能体**，分工协作：
 
 ```
 agentML/
-├── .opencode/
-│   ├── agents/              # 6 个 Agent 定义
+├── .opencode/              # OpenCode 配置
+│   ├── agents/             # 6 个 Agent 定义
 │   │   ├── automl-coordinator.md
 │   │   ├── data-processor.md
 │   │   ├── feature-engineer.md
@@ -170,17 +217,16 @@ agentML/
 │   │   ├── model-training/
 │   │   ├── model-validation/
 │   │   └── shap-analysis/
-│   ├── mcp_servers/        # MCP 工具实现
-│   │   └── python_executor/
-│   └── opencode.json        # OpenCode 配置
+│   └── opencode.json       # OpenCode 配置
 │
-├── core/                   # 核心逻辑（可选使用）
-│   ├── agent_manager/
-│   ├── data_agent/
-│   ├── model_agent/
-│   └── operation_agent/
-│
-└── tests/                  # 测试用例
+├── adapter/                # Agent 封装（可选使用）
+├── mcp_servers/            # MCP 工具实现
+│   └── python_executor/
+├── tests/                  # 测试用例（不进入版本控制）
+├── .env                    # 环境变量（不进入版本控制）
+├── README.md
+├── AGENTS.md
+└── pyproject.toml
 ```
 
 ---
@@ -195,25 +241,12 @@ agentML/
 ### 步骤
 
 ```bash
-# 1. 克隆项目
-git clone https://github.com/lpffernando/agentML.git
-cd agentML
+# 1. 安装 OpenCode
+npm i -g opencode-ai
 
-# 2. 创建虚拟环境
-conda create -n agentml python=3.11
-conda activate agentml
+# 2. 配置 .opencode（全局或项目目录）
 
-# 3. 安装依赖
-pip install -r requirements.txt
-
-# 4. 安装 OpenCode 依赖
-pip install -r requirements-opencode.txt
-
-# 5. 配置环境变量
-cp .env.example .env
-# 编辑 .env 添加你的 API Key
-
-# 6. 启动 OpenCode
+# 3. 启动
 opencode
 ```
 
@@ -229,32 +262,14 @@ OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 
 # 或使用其他 75+ 提供商
+
+# Atlas GIS Tools (可选，用于地图/GIS 分析)
+ATLAS_TOKEN=pk.eyJ...
 ```
 
 ---
 
 ## 快速开始
-
-### 1. 启动 OpenCode
-
-```bash
-# 在项目目录运行
-opencode
-```
-
-### 2. 基本使用
-
-```bash
-# 方式1: 让 coordinator 自动处理
-@automl-coordinator 使用 data/churn.csv 构建客户流失预测模型
-
-# 方式2: 分步处理
-@data-processor 加载并清洗数据
-@model-selector 训练模型
-@model-validator 验证结果
-```
-
-### 3. 配置 LLM
 
 在 `opencode.json` 中配置模型：
 
@@ -292,18 +307,6 @@ opencode
 2. 在 `opencode.json` 配置
 
 ---
-
-## 与原 AutoML-Agent 的关系
-
-agentML 是基于原 [AutoML-Agent](https://github.com/your-repo/AutoML-Agent) (ICML 2025) 的**重新架构**版本：
-
-| 对比 | 原 AutoML-Agent | agentML (OpenCode 版) |
-|------|-----------------|---------------------|
-| Agent 定义 | 自定义实现 | OpenCode 标准 |
-| Skills | 无 | 5 个标准化 Skills |
-| 工具调用 | 硬编码 | MCP 协议 |
-| 扩展性 | 有限 | 插件式扩展 |
-| 模型支持 | 固定 | 75+ 提供商 |
 
 ---
 

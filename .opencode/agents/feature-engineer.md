@@ -1,5 +1,6 @@
 ---
-name: feature-engineer
+name: feature-engineering
+aliases: [feature-engineer]
 description: Feature engineering and selection specialist - creates, transforms, and selects features for ML
 mode: subagent
 ---

@@ -19,11 +19,12 @@ This is an agentML (Automated Machine Learning) project built on OpenCode platfo
 The project uses a multi-agent system:
 
 1. **Coordinator** - Orchestrates the entire pipeline
-2. **Data Processor** - Data cleaning and preprocessing
+2. **Data Processor / EDA** - EDA and data preprocessing
 3. **Feature Engineer** - Feature selection and construction
 4. **Model Selector** - Model selection and hyperparameter tuning
 5. **Model Validator** - Cross-validation and evaluation
 6. **Explainability** - SHAP analysis and model interpretation
+7. **Viz Agent** - Visualization and charting
 
 ## Code Conventions
 
@@ -36,26 +37,25 @@ The project uses a multi-agent system:
 
 ## Key Directories
 
-- `agent_manager/` - Main coordinator logic
-- `data_agent/` - Data processing agents
-- `model_agent/` - Model selection agents
-- `operation_agent/` - Code execution
-- `prompt_agent/` - Prompt generation
-- `prompt_pool/` - Task-specific prompts
-- `utils/` - Utility functions
+- `.opencode/agents/` - Agent definitions (7 agents)
+- `.opencode/skills/` - Standardized skills (8 skills)
+- `adapter/` - Agent wrapper utilities
+- `mcp_servers/` - MCP tool implementations
+- `tests/` - Test cases
 
 ## Usage
 
 When working on ML pipeline tasks:
 
 1. First understand the data and requirements
-2. Use subagents (@data-processor, @feature-engineer, etc.) for specialized tasks
-3. Follow the pipeline: data → features → model → validation → explanation
-4. Generate comprehensive reports with metrics and visualizations
+2. Use subagents (@data-processor/@eda, @feature-engineer, etc.) for specialized tasks
+3. Use skills via `skill` tool (e.g., `skill(name="eda")`, `skill(name="data-visualization")`)
+4. Follow the pipeline: data → features → model → validation → explanation
+5. Generate comprehensive reports with metrics and visualizations
 
 ## Environment
 
-Required packages are listed in `requirements.txt`. Key dependencies:
+Required packages are listed in `requirements-opencode.txt`. Key dependencies:
 - langchain, langchain_community
 - scikit-learn, xgboost, lightgbm, catboost
 - shap, mlflow

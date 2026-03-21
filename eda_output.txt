@@ -1,0 +1,96 @@
+======================================================================
+COMPREHENSIVE DATA ANALYSIS REPORT
+File: D:\MVPutoml-agent	ests\上海分析.csv
+======================================================================
+
+1. BASIC INFORMATION
+----------------------------------------
+Shape: 5169 rows x 18 columns
+Memory Usage: 0.71 MB
+Duplicate Rows: 0
+
+Column Names and Data Types:
+  pop_density: float64
+  biz_density: float64
+  circle_count: float64
+  metro_stations: float64
+  bus_stops: float64
+  biz_biz: float64
+  biz_res: float64
+  residential: float64
+  parks: float64
+  edu_elem: float64
+  edu_medical: float64
+  edu_school: float64
+  gov: float64
+  biz_facilities: float64
+  office: float64
+  culture_facilities: float64
+  subway_access: float64
+  lat: float64
+
+2. MISSING VALUE ANALYSIS
+----------------------------------------
+Total Missing Values: 0
+Columns with Missing Values: 0
+
+No missing values found!
+
+3. NUMERICAL STATISTICS
+----------------------------------------
+       pop_density  biz_density  circle_count  metro_stations  bus_stops    biz_biz    biz_res  residential      parks   edu_elem  edu_medical  edu_school        gov  biz_facilities     office  culture_facilities  subway_access         lat
+count    5169.0000    5169.0000     5169.0000       5169.0000  5169.0000  5169.0000  5169.0000    5169.0000  5169.0000  5169.0000    5169.0000   5169.0000  5169.0000       5169.0000  5169.0000           5169.0000      5169.0000   5169.0000
+mean        2.7964       5.0646        0.0076          0.0194     0.2650     0.0161     0.0018       0.0663     0.0009     0.0038       0.0075      0.0333     0.0217          0.0531     0.0507              0.0047         0.0049  11768.7080
+std         2.4928       4.7646        0.0131          0.0300     0.1839     0.0390     0.0114       0.0517     0.0076     0.0140       0.0238      0.0427     0.0311          0.0491     0.0532              0.0140         0.0171   4890.9745
+min         0.0000       0.0000        0.0000          0.0000     0.0000     0.0000     0.0000       0.0000     0.0000     0.0000       0.0000      0.0000     0.0000          0.0000     0.0000              0.0000         0.0000      0.0000
+25%         0.9657       1.8331        0.0002          0.0030     0.1142     0.0000     0.0000       0.0204     0.0000     0.0000       0.0000      0.0000     0.0015          0.0058     0.0018              0.0000         0.0000   9829.6502
+50%         2.3762       3.8848        0.0032          0.0078     0.2440     0.0000     0.0000       0.0566     0.0000     0.0000       0.0000      0.0134     0.0092          0.0418     0.0303              0.0002         0.0000  11559.8329
+75%         3.9312       6.6088        0.0086          0.0238     0.3999     0.0030     0.0000       0.1103     0.0000     0.0000       0.0000      0.0580     0.0277          0.0882     0.0901              0.0032         0.0000  13471.9417
+max        44.7201      45.1058        0.1051          0.2711     0.8112     0.1598     0.1588       0.1598     0.1585     0.1561       0.1597      0.1598     0.1598          0.1598     0.1598              0.1597         0.1594  82515.0217
+
+4. ZERO VALUES ANALYSIS
+----------------------------------------
+  circle_count: 1204 (23.3%)
+  metro_stations: 309 (6.0%)
+  bus_stops: 367 (7.1%)
+  biz_biz: 3509 (67.9%)
+  biz_res: 4912 (95.0%)
+  residential: 488 (9.4%)
+  parks: 4987 (96.5%)
+  edu_elem: 4384 (84.8%)
+  edu_medical: 4202 (81.3%)
+  edu_school: 2288 (44.3%)
+  gov: 828 (16.0%)
+  biz_facilities: 1087 (21.0%)
+  office: 1179 (22.8%)
+  culture_facilities: 2530 (48.9%)
+  subway_access: 4164 (80.6%)
+  lat: 266 (5.1%)
+
+5. DATA QUALITY ASSESSMENT
+----------------------------------------
+Columns with Outliers (IQR method):
+  pop_density: 142 outliers (2.7%)
+  biz_density: 301 outliers (5.8%)
+  circle_count: 454 outliers (8.8%)
+  metro_stations: 473 outliers (9.2%)
+  biz_biz: 1080 outliers (20.9%)
+  biz_res: 257 outliers (5.0%)
+  parks: 182 outliers (3.5%)
+  edu_elem: 785 outliers (15.2%)
+  edu_medical: 967 outliers (18.7%)
+  edu_school: 126 outliers (2.4%)
+  gov: 476 outliers (9.2%)
+  culture_facilities: 680 outliers (13.2%)
+  subway_access: 1005 outliers (19.4%)
+  lat: 492 outliers (9.5%)
+
+6. SUMMARY & RECOMMENDATIONS
+----------------------------------------
+- Total records: 5169
+- Total features: 18
+- Missing values: 0 (0.00%)
+- Duplicate rows: 0
+- Columns with outliers: 14
+
+Data Quality Score: 100.0/100
