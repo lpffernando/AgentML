@@ -45,11 +45,6 @@ dev = [
 opencode = [
     "mcp>=1.0.0",
 ]
-core = [
-    # Optional: Legacy core components
-    # Install with: pip install -e ".[core]"
-    # This will use the core/ directory if present
-]
 all = [
     "agentml[dev]",
     "agentml[opencode]",

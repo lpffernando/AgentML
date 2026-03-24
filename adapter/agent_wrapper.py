@@ -1,30 +1,26 @@
 """
 agentML Adapter
 
-This adapter layer provides OPTIONAL integration between OpenCode and
-the legacy core/ components (from original AutoML-Agent project).
-It is NOT required for OpenCode to function.
+This adapter layer provides a Python interface for using OpenCode agents
+in standalone Python scripts. It is NOT required for OpenCode to function.
 
 This adapter is useful if you want to:
-- Reuse existing core/ components
-- Gradually migrate legacy code
-- Combine old and new capabilities
+- Integrate OpenCode agents into existing Python projects
+- Build custom ML pipelines
+- Run tests against the agent system
 
-If you don't have the core/ directory, the adapter will work in standalone mode.
+Usage:
+    from adapter.agent_wrapper import OpenCodeAgentAdapter
+    adapter = OpenCodeAgentAdapter(task_type="tabular_classification")
+    result = adapter.run("train a model on data.csv")
 """
 
 import json
 import os
-import sys
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from enum import Enum
-
-# Add core to path (optional dependency)
-CORE_PATH = Path(__file__).parent.parent / "core"
-if CORE_PATH.exists():
-    sys.path.insert(0, str(CORE_PATH))
 
 
 class TaskType(Enum):

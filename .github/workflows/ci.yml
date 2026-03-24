@@ -48,13 +48,13 @@ jobs:
       run: pip install ruff black mypy
       
     - name: Run ruff
-      run: ruff check adapter/ core/ tests/
+      run: ruff check adapter/ tests/
       
     - name: Run black
-      run: black --check adapter/ core/ tests/
+      run: black --check adapter/ tests/
       
     - name: Run mypy
-      run: mypy adapter/ core/ || true
+      run: mypy adapter/ || true
 
   opencode-validate:
     runs-on: ubuntu-latest

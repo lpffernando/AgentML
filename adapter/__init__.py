@@ -1,8 +1,8 @@
 """
 agentML Adapter Package
 
-This package provides integration between agentML (OpenCode-based AutoML)
-and the optional legacy core components.
+This package provides a Python interface for using OpenCode agents
+in standalone Python scripts.
 
 Usage:
     from adapter import OpenCodeAgentAdapter, create_adapter
