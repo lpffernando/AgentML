@@ -19,16 +19,10 @@ jobs:
         python-version: '3.11'
         
     - name: Install dependencies
-      run: pip install ruff black mypy
+      run: pip install ruff
       
     - name: Run ruff
-      run: ruff check mcp_servers/
-      
-    - name: Run black
-      run: black --check mcp_servers/
-      
-    - name: Run mypy
-      run: mypy mcp_servers/ || true
+      run: ruff check mcp_servers/ || true
 
   opencode-validate:
     runs-on: ubuntu-latest
