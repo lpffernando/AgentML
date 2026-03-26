@@ -57,11 +57,11 @@ Repository = "https://github.com/lpffernando/agentML"
 Issues = "https://github.com/lpffernando/agentML/issues"
 
 [project.scripts]
-agentml = "adapter.cli:main"
+# CLI entry point can be added later
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["adapter*", "mcp_servers*"]
+include = ["mcp_servers*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.md", "*.json", "*.yaml"]
@@ -89,8 +89,8 @@ python_functions = ["test_*"]
 addopts = ["-v", "--tb=short"]
 
 [tool.coverage.run]
-source = ["adapter"]
-omit = ["*/tests/*", "*/mcp_servers/*"]
+source = ["mcp_servers"]
+omit = ["*/mcp_servers/*"]
 
 [tool.coverage.report]
 exclude_lines = [

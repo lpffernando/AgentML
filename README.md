@@ -1,14 +1,14 @@
-# agentML
+# AgentML
 
 > 基于 OpenCode 的多智能体自动化机器学习框架
 
-agentML 是一个构建在 OpenCode 平台上的自动化机器学习框架，通过**多智能体（Multi-Agent）**架构 + **标准化 Skills** + **MCP 工具**实现端到端的 ML 流水线。
+AgentML 是一个构建在 OpenCode 平台上的自动化机器学习框架，通过**多智能体（Multi-Agent）**架构 + **标准化 Skills** + **MCP 工具**实现端到端的 ML 流水线。
 
 ---
 
 ## 核心架构
 
-agentML 由三层架构组成：
+AgentML 由三层架构组成：
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -28,7 +28,7 @@ agentML 由三层架构组成：
 
 ## Agent 体系
 
-agentML 定义了 **7 个专业化智能体**，分工协作：
+AgentML 定义了 **7 个专业化智能体**，分工协作：
 
 | Agent | 类型 | 职责 |
 |-------|------|------|
@@ -42,21 +42,6 @@ agentML 定义了 **7 个专业化智能体**，分工协作：
 
 ### Agent 协作流程
 
-```
-用户请求
-    ↓
-@automl-coordinator (主智能体)
-    ↓
-┌─────────────────────────────────────────┐
-│  @data-processor   →   EDA/数据清洗     │
-│  @feature-engineering →   特征工程      │
-│  @model-selector   →   模型训练         │
-│  @model-validator  →   模型验证         │
-│  @explainability   →   模型解释         │
-│  @viz-agent        →   可视化           │
-└─────────────────────────────────────────┘
-    ↓
-返回结果 + 报告
 ```
 用户请求
     ↓
