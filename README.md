@@ -189,28 +189,31 @@ opencode
 ```
 agentML/
 ├── .opencode/              # OpenCode 配置
-│   ├── agents/             # 6 个 Agent 定义
+│   ├── agents/             # 7 个 Agent 定义
 │   │   ├── automl-coordinator.md
 │   │   ├── data-processor.md
 │   │   ├── feature-engineer.md
 │   │   ├── model-selector.md
 │   │   ├── model-validator.md
-│   │   └── explainability.md
-│   ├── skills/             # 5 个标准化 Skills
+│   │   ├── explainability.md
+│   │   └── viz-agent.md
+│   ├── skills/             # 8 个标准化 Skills
+│   │   ├── eda/
 │   │   ├── data-cleaning/
+│   │   ├── data-visualization/
+│   │   ├── geospatial-analysis/
 │   │   ├── feature-engineering/
 │   │   ├── model-training/
 │   │   ├── model-validation/
 │   │   └── shap-analysis/
 │   └── opencode.json       # OpenCode 配置
 │
-├── adapter/                # Agent 封装（可选使用）
 ├── mcp_servers/            # MCP 工具实现
 │   └── python_executor/
-├── tests/                  # 测试用例（不进入版本控制）
-├── .env                    # 环境变量（不进入版本控制）
+├── .env                    # 环境变量
+├── LICENSE
+├── CHANGELOG.md
 ├── README.md
-├── AGENTS.md
 └── pyproject.toml
 ```
 
